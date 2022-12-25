@@ -1,13 +1,11 @@
-import {html , LitElement} from '../node_modules/lit-element/lit-element';
+import {html} from '../node_modules/lit-element/lit-element';
+import View from './view';
 
-export default class App extends LitElement{
+export default class App extends View{
     constructor(){
         super()
     }
-    createRenderRoot(){
-        return this;
-    }
     render(){
-        return html`<h1>하이하이2</h1>`   
+        return html `<menu-page></menu-page>`
     }
 }
