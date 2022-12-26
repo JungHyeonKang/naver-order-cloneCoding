@@ -23,24 +23,10 @@ export default class MenuPage extends View{
                         주문
                     </div>
                 </div>
+
                 <!-- 주문분류 -->
-                <div class="tab-switch-box" role="tablist">
-          <a href="#" class="tab-switch is-active" role="tab">
-              🛍&nbsp;&nbsp;포장
-              <img src="./assets/images/ico-check.svg" alt="" class="ico-check" aria-hidden="true">
-          </a>
-          <a href="#" class="tab-switch" role="tab">
-              🍽&nbsp;&nbsp;매장
-              <img src="./assets/images/ico-check.svg" alt="" class="ico-check" aria-hidden="true">
-          </a>
-          <a href="#" class="tab-switch" role="tab">
-              🛵&nbsp;&nbsp;배달
-              <img src="./assets/images/ico-check.svg" alt="" class="ico-check" aria-hidden="true">
-          </a>
-      </div>
-                <div class="info-main-notice">
-                    가지고 가실 수 있게 포장해 드립니다.
-                </div>
+                <tab-list></tab-list>
+                
                 <div class="info-main-notice alert hidden">
                     <svg aria-hidden="true" class="ico-clock" viewBox="0 0 13 13" width="13" height="13" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
