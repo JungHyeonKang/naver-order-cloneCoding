@@ -4,7 +4,7 @@
       "id": 1,
       "name": "웜볼 1",
       "imageUrl": "https://ldb-phinf.pstatic.net/20200416_252/1587007251652svUkx_PNG/%C4%A5%B8%AE%BA%A3%C0%CC%C4%C1_%BF%FA%BA%BC.png?type=f459_345_60_sharpen",
-      "isPopular": false,
+      "isPopular": true,
       "price": 6900
     },
     {
@@ -12,21 +12,21 @@
       "name": "웜볼 2",
       "imageUrl": "https://ldb-phinf.pstatic.net/20200416_252/1587007251652svUkx_PNG/%C4%A5%B8%AE%BA%A3%C0%CC%C4%C1_%BF%FA%BA%BC.png?type=f459_345_60_sharpen",
       "isPopular": false,
-      "price": 6800
+      "price": 4800
     },
     {
       "id": 3,
       "name": "웜볼 3",
       "imageUrl": "https://ldb-phinf.pstatic.net/20200416_252/1587007251652svUkx_PNG/%C4%A5%B8%AE%BA%A3%C0%CC%C4%C1_%BF%FA%BA%BC.png?type=f459_345_60_sharpen",
       "isPopular": false,
-      "price": 6900
+      "price": 9900
     },
     {
       "id": 4,
       "name": "샐러드 1",
       "imageUrl": "https://ldb-phinf.pstatic.net/20200520_46/1589962579612L1Bx3_PNG/%B3%AA%B8%B8%C0%C7_%BB%F8%B7%AF%B5%F0.png?type=f220_220_60_sharpen",
-      "isPopular": false,
-      "price": 6900
+      "isPopular": true,
+      "price": 8900
     }
   ],
   "menuGroups": [
