@@ -11,4 +11,16 @@ async function getRecentMenu(){
     return data;
 }
 
-export {getRecentMenu}
+async function getMenuGroups(){
+   const response = await fetch('http://localhost:3000/menuGroups',{
+        method : "GET",
+        headers : {
+            Accept :  "application/json"
+        }
+    })
+    const data  =response.json()
+
+    return data;
+}
+
+export {getRecentMenu , getMenuGroups }

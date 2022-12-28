@@ -1,4 +1,4 @@
-import {html, render} from "../../node_modules/lit-element/lit-element"
+import {html} from "../../node_modules/lit-element/lit-element"
 import View from "../view.js"
 export default class RecentMenuList extends View{
     constructor(recentItems=[]){
@@ -20,7 +20,7 @@ export default class RecentMenuList extends View{
         </div>
         <div class="recent-menu-area scroll-x">
             <ul class="recent-menu-list">
-            ${this.recentItems.map(({name , imageUrl,price,isPopular} = item)=>
+            ${this.recentItems.map(({name , imageUrl,price,isPopular})=>
                 html` 
                 <li class="recent-menu-item is-ordered">
                 <a>
