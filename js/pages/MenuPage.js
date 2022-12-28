@@ -23,6 +23,11 @@ export default class MenuPage extends View{
             behavior: "smooth",
           });
     }
+    redirectDetailPage(id){
+        console.log("gd")
+        history.pushState(null,null,`/detail/${id}`)
+        dispatchEvent(new PopStateEvent("popstate"));
+    }
     static get properties(){
         return{
             recentItems : {
@@ -72,7 +77,7 @@ export default class MenuPage extends View{
                 </div>
 
                 <!-- 최근 주문 내역 -->
-                <recent-menu-list .recentItems=${this.recentItems}></recent-menu-list>
+                <recent-menu-list .recentItems=${this.recentItems} .redirectDetailPage=${this.redirectDetailPage.bind(this)}></recent-menu-list>
                 
             </div>
         </div>

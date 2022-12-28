@@ -1,14 +1,18 @@
 import {html} from "../../node_modules/lit-element/lit-element"
 import View from "../view.js"
 export default class RecentMenuList extends View{
-    constructor(recentItems=[]){
+    constructor(recentItems=[],redirectDetailPage){
         super()
         this.recentItems = recentItems
+        this.redirectDetailPage = redirectDetailPage;
     }
     static get properties(){
         return{
             recentItems : {
                 type : Array
+            },
+            redirectDetailPage : {
+                type : Function
             },
         }
     }
@@ -20,9 +24,9 @@ export default class RecentMenuList extends View{
         </div>
         <div class="recent-menu-area scroll-x">
             <ul class="recent-menu-list">
-            ${this.recentItems.map(({name , imageUrl,price,isPopular})=>
+            ${this.recentItems.map(({name , imageUrl,price,isPopular,id})=>
                 html` 
-                <li class="recent-menu-item is-ordered">
+                <li class="recent-menu-item is-ordered" @click=${()=>this.redirectDetailPage(id)}>
                 <a>
                     <div class="menu-img-area">
                         ${isPopular ? html`<span class="badge-popular">인기</span>` : ''}
