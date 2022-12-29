@@ -1,16 +1,34 @@
 import {html} from "lit-element/lit-element"
 import View from "../view.js"
 import {getKoreanMoneyString} from "../utils/currency.js"
+import SpinButton from "./SpinButton.js"
+
 export default class MenuDetail extends View{
-    constructor(menuInfo={}){
+    constructor(menuInfo={} ,menuAmount,onIncreaseAmount,onDecreaseAmount){
         super()
         this.menuInfo = menuInfo
+        this.menuAmount = menuAmount
+        this.onIncreaseAmount = onIncreaseAmount
+        this.onDecreaseAmount = onDecreaseAmount
+        this.orderType= '포장' // 주문 타입 포장으로 디폴트
     }
-    static get properties(){
+    static get properties() {
         return {
             menuInfo : {
                 type : Object
-            }
+            },
+            orderType : {
+                type : String
+            },
+            menuAmount : {
+                type : Number
+            },
+            onIncreaseAmount : {
+                type : Function
+            },
+            onDecreaseAmount : {
+                type : Function
+            },
         }
         
     }
@@ -53,17 +71,17 @@ export default class MenuDetail extends View{
                             주문
                         </div>
                         <div class="tab-switch-box" role="tablist">
-                            <a href="#" class="tab-switch is-active" role="tab">🛍&nbsp;&nbsp;포장</a>
-                            <a href="#" class="tab-switch" role="tab">🍽&nbsp;&nbsp;매장</a>
+                            <a class="tab-switch ${this.orderType === '포장' ? 'is-active' : ''}" role="tab" @click=${()=>this.orderType = '포장'}>🛍&nbsp;&nbsp;포장</a>
+                            <a class="tab-switch ${this.orderType === '매장' ? 'is-active' : ''}" role="tab" @click=${()=>this.orderType = '매장'}>🍽&nbsp;&nbsp;매장</a>
                         </div>
                     </div>
                     <div class="type-amount">
                         <div class="title">수량</div>
-                        <div class="amount-select">
-                            <button class="btn-minus" aira-label="빼기" disabled></button>
-                            <span class="amount disabled">1</span>
-                            <button class="btn-plus" aria-label="더하기"></button>
-                        </div>
+                        ${SpinButton({
+                            count : this.menuAmount , 
+                            onIncreaseAmount : this.onIncreaseAmount,
+                             onDecreaseAmount : this.onDecreaseAmount 
+                        })}
                     </div>
                     <button class="btn-order" onClick="popupOpen()">1개 담기 9,999원</button>
                     <!-- <button class="btn-order" disabled>지금 주문 가능한 시간이 아닙니다.</button> -->

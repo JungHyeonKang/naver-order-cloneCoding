@@ -1,11 +1,13 @@
 import { html } from "../../node_modules/lit-element/lit-element"
 import View from "../view.js"
 import { getRecentMenu , getMenuGroups,getMenu} from "../api";
+import {DEFAULT_MENU} from "../utils/menu.js"
 export default class DetailPage extends View{
     constructor(){
         super()
         const [menuId]= location.pathname.split("/").splice(-1)
-        this.menuInfo = {};
+        this.menuInfo = DEFAULT_MENU;
+        this.menuAmount =1
          getMenu(menuId).then((menu)=>this.menuInfo = menu)
     }
     static get properties(){
@@ -19,6 +21,13 @@ export default class DetailPage extends View{
         }
         
     }
+    onIncreaseAmount(){
+        this.menuAmount +=1
+    }
+    onDecreaseAmount(){
+        if(this.menuAmount <= 1) return
+        this.menuAmount -=1
+    }
     render(){
         return html `
          <div class="container">
@@ -27,7 +36,12 @@ export default class DetailPage extends View{
         <!-- // 고정헤더영역 -->
 
         <!-- 메뉴주문정보영역 -->
-       <menu-detail-list .menuInfo=${this.menuInfo}></menu-detail-list>
+       <menu-detail-list 
+       .menuInfo=${this.menuInfo} 
+       .menuAmount=${this.menuAmount} 
+       .onIncreaseAmount=${this.onIncreaseAmount.bind(this)} 
+       .onDecreaseAmount=${this.onDecreaseAmount.bind(this)}>
+       </menu-detail-list>
        <!-- //메뉴주문정보영역 -->
         <!-- 주문자리뷰영역 -->
         <div class="menu-review-area">
