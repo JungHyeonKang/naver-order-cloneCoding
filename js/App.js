@@ -6,9 +6,8 @@ export default class App extends View{
         super()
         this.currenPage = "menu"
         window.onpopstate = () =>{
-            const [,currenPage,id]=location.pathname.split("/")
+            const [,currenPage]=location.pathname.split("/")
             this.currenPage = currenPage
-            console.log(this.currenPage)
         }
     }
     static get properties(){

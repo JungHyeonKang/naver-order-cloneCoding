@@ -1,9 +1,10 @@
 import {html} from "../../node_modules/lit-element/lit-element"
 import View from "../view.js"
 export default class MenuList extends View{
-    constructor(menuGroup){
+    constructor(menuGroup=[],redirectDetailPage){
         super()
         this.menuGroup = menuGroup
+        this.redirectDetailPage = redirectDetailPage
         this.isClosed = false;
     }
     static get property(){
@@ -13,6 +14,9 @@ export default class MenuList extends View{
             },
             isClosed : {
                 type : Boolean
+            },
+            redirectDetailPage : {
+                type : Function
             },
         }
     }
@@ -32,7 +36,7 @@ export default class MenuList extends View{
                 </div>
                 <ul class="menu-list">
                     ${this.menuGroup.items.map((item)=>
-                        html`<li class="menu-item">
+                        html`<li class="menu-item" @click=${()=>this.redirectDetailPage(item.id)}>
                         <a class="menu-detail">
                             <div class="menu-img-area">
                                 <img src="${item.imageUrl}" alt=""

@@ -1,12 +1,13 @@
 import { html } from "../../node_modules/lit-element/lit-element"
 import View from "../view.js"
-import { getRecentMenu , getMenuGroups} from "../api";
+import { getRecentMenu , getMenuGroups,getMenu} from "../api";
 export default class MenuPage extends View{
     constructor(){
         super()
         this.recentItems = [] // 최근 주문 리스트
         this.menuGroups = [];
         this.selectedCategory = '추천' //카테고리 추천으로 디폴트
+        this.menuDetail = []
         getRecentMenu().then((response)=> this.recentItems = response)
         getMenuGroups().then((response)=> this.menuGroups = response)
     }
@@ -24,7 +25,6 @@ export default class MenuPage extends View{
           });
     }
     redirectDetailPage(id){
-        console.log("gd")
         history.pushState(null,null,`/detail/${id}`)
         dispatchEvent(new PopStateEvent("popstate"));
     }
@@ -34,6 +34,9 @@ export default class MenuPage extends View{
                 type : Array  
             },
             menuGroups : {
+                type : Array  
+            },
+            menuDetail : {
                 type : Array  
             },
             onChangeCategory : {
@@ -90,7 +93,7 @@ export default class MenuPage extends View{
 
     <!-- 메뉴리스트영역 -->
     ${this.menuGroups.map((menuGroup)=>
-            html`<menu-list .menuGroup=${menuGroup}></menu-list>`
+            html`<menu-list .menuGroup=${menuGroup} .redirectDetailPage=${this.redirectDetailPage.bind(this)}></menu-list>`
         )}
     
     <!-- // 메뉴리스트영역 -->
