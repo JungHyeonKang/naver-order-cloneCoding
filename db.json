@@ -290,6 +290,12 @@
           "reviewPoint": 4.5,
           "content": "자주애용하고 있습니다 맛있어요",
           "orderDate": "2021. 10. 8"
+        },
+        {
+          "reviewerId": "12zero***",
+          "reviewPoint": 1.5,
+          "content": "노맛",
+          "orderDate": "2022. 10. 8"
         }
       ]
     },

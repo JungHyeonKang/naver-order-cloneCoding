@@ -51,31 +51,16 @@ export default class DetailPage extends View{
                     <div class="title">주문자 사진<span class="num">99</span></div>
                     <div class="scroll-x">
                         <ul class="orderer-pic-list">
+                           ${this.menuInfo.pictures.map((pic)=>html`
                             <li class="orderer-pic-item">
                                 <a href="#" class="orderer-pic-link">
-                                    <img src="https://via.placeholder.com/104/fff/000" alt="">
+                                    <img src="${pic}" alt="">
                                 </a>
                             </li>
-                            <li class="orderer-pic-item">
-                                <a href="#" class="orderer-pic-link">
-                                    <img src="https://via.placeholder.com/104/fff/000" alt="">
-                                </a>
-                            </li>
-                            <li class="orderer-pic-item">
-                                <a href="#" class="orderer-pic-link">
-                                    <img src="https://via.placeholder.com/104/fff/000" alt="">
-                                </a>
-                            </li>
-                            <li class="orderer-pic-item">
-                                <a href="#" class="orderer-pic-link">
-                                    <img src="https://via.placeholder.com/104/fff/000" alt="">
-                                </a>
-                            </li>
-                            <li class="orderer-pic-item">
-                                <a href="#" class="orderer-pic-link">
-                                    <img src="https://via.placeholder.com/104/fff/000" alt="">
-                                </a>
-                            </li>
+                           `)}
+                               
+                          
+                           
                         </ul>
                     </div>
                 </div>
@@ -85,55 +70,24 @@ export default class DetailPage extends View{
             <!-- 주문자리뷰 -->
             <div class="orderer-review-area">
                 <div class="common-inner">
-                    <div class="title">주문자 리뷰<span class="num">999</span></div>
+                    <div class="title">주문자 리뷰<span class="num">${this.menuInfo.reviews.length}</span></div>
                     <ul class="review-list">
-                        <li class="review-item">
-                            <div class="review-star">
-                                <span class="ico-star-group">
-                                    <span class="ico-star-group-fill" style="width: 90%;"></span>
-                                </span>
-                                <span class="point">4.5</span>
-                            </div>
-                            <p class="review-text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nobis
-                                repellat nihil enim doloremque! Illo fugit excepturi natus quis est error officiis nulla
-                                saepe voluptatem accusantium, ab necessitatibus eveniet facilis numquam?</p>
-                            <div class="review-info">
-                                <span class="review-nickname">zero****</span>
-                                <span class="review-date">2021. 10. 7 주문</span>
-                            </div>
-                        </li>
-
-                        <li class="review-item">
-                            <div class="review-star">
-                                <span class="ico-star-group">
-                                    <span class="ico-star-group-fill" style="width: 80%;"></span>
-                                </span>
-                                <span class="point">4.0</span>
-                            </div>
-                            <p class="review-text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nobis
-                                repellat nihil enim doloremque! Illo fugit excepturi natus quis est error officiis nulla
-                                saepe voluptatem accusantium, ab necessitatibus eveniet facilis numquam?</p>
-                            <div class="review-info">
-                                <span class="review-nickname">zero****</span>
-                                <span class="review-date">2021. 10. 7 주문</span>
-                            </div>
-                        </li>
-
-                        <li class="review-item">
-                            <div class="review-star">
-                                <span class="ico-star-group">
-                                    <span class="ico-star-group-fill" style="width: 70%"></span>
-                                </span>
-                                <span class="point">3.5</span>
-                            </div>
-                            <p class="review-text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nobis
-                                repellat nihil enim doloremque! Illo fugit excepturi natus quis est error officiis nulla
-                                saepe voluptatem accusantium, ab necessitatibus eveniet facilis numquam?</p>
-                            <div class="review-info">
-                                <span class="review-nickname">zero****</span>
-                                <span class="review-date">2021. 10. 7 주문</span>
-                            </div>
-                        </li>
+                        ${this.menuInfo.reviews.map(({reviewerId,reviewPoint,content,orderDate})=>
+                        html` 
+                            <li class="review-item">
+                                <div class="review-star">
+                                    <span class="ico-star-group">
+                                        <span class="ico-star-group-fill" style="width: 90%;"></span>
+                                    </span>
+                                    <span class="point">${reviewPoint}</span>
+                                </div>
+                                <p class="review-text">${content}</p>
+                                <div class="review-info">
+                                    <span class="review-nickname">${reviewerId}</span>
+                                    <span class="review-date">${orderDate}</span>
+                                </div>
+                            </li>
+                        `)}
                     </ul>
 
                     <button class="btn-more">더보기</button>
