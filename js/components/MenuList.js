@@ -7,7 +7,7 @@ export default class MenuList extends View{
         this.redirectDetailPage = redirectDetailPage
         this.isClosed = false;
     }
-    static get property(){
+    static get properties(){
         return{
             menuGroup : {
                 type : Object
@@ -18,11 +18,13 @@ export default class MenuList extends View{
             redirectDetailPage : {
                 type : Function
             },
+            onChangeIsClosed : {
+                type : Function
+            },
         }
     }
     onChangeIsClosed(){
         this.isClosed = !this.isClosed;
-        console.log(this.isClosed)
     }
     render(){
         return html`
@@ -30,7 +32,7 @@ export default class MenuList extends View{
             <div class="common-inner">
                 <div class="menu-category">
                     <p class="title">${this.menuGroup.categoryName}</p>
-                    <button class="btn-toggle" @click=@click=${this.onChangeIsClosed}>
+                    <button class="btn-toggle" @click=${this.onChangeIsClosed}>
                         <img class="ico-arrow" src="./assets/images/ico-arrow.svg" alt="">
                     </button>
                 </div>

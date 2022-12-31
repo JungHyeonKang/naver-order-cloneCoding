@@ -5,6 +5,7 @@ export default class App extends View{
     constructor(){
         super()
         this.currenPage = "menu"
+        this.orderTypeIndex =0
         window.onpopstate = () =>{
             const [,currenPage]=location.pathname.split("/")
             this.currenPage = currenPage
@@ -15,16 +16,31 @@ export default class App extends View{
             currenPage : {
                 type : String  
             },
+            orderTypeIndex : {
+                type : Number  
+            },
+            setOrderTypeIndex : {
+                type : Function  
+            },
         }
+    }
+    setOrderTypeIndex(index){
+        console.log(index)
+        this.orderTypeIndex = index
     }
     route(){
         switch (this.currenPage) {
             case "detail":
-                return html `<detail-page></detail-page>`
+                return html `<detail-page
+                .orderTypeIndex=${this.orderTypeIndex} 
+                .setOrderTypeIndex=${this.setOrderTypeIndex.bind(this)}>
+                </detail-page>`
                
             default:
-                return html `<menu-page></menu-page>`
-                
+                return html `<menu-page 
+                .orderTypeIndex=${this.orderTypeIndex} 
+                .setOrderTypeIndex=${this.setOrderTypeIndex.bind(this)}>
+                </menu-page>`                
         }
     }
     render(){

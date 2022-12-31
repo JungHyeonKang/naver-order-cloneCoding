@@ -4,13 +4,14 @@ import {getKoreanMoneyString} from "../utils/currency.js"
 import SpinButton from "./SpinButton.js"
 
 export default class MenuDetail extends View{
-    constructor(menuInfo={} ,menuAmount,onIncreaseAmount,onDecreaseAmount){
+    constructor(menuInfo={} ,menuAmount,onIncreaseAmount,onDecreaseAmount,orderTypeIndex=0){
         super()
         this.menuInfo = menuInfo
         this.menuAmount = menuAmount
         this.onIncreaseAmount = onIncreaseAmount
         this.onDecreaseAmount = onDecreaseAmount
-        this.orderType= '포장' // 주문 타입 포장으로 디폴트
+        this.orderType= orderTypeIndex === 0 ? '포장' : '매장' 
+        this.orderTypeIndex = orderTypeIndex
     }
     static get properties() {
         return {
@@ -28,6 +29,9 @@ export default class MenuDetail extends View{
             },
             onDecreaseAmount : {
                 type : Function
+            },
+            orderTypeIndex : {
+                type : Number  
             },
         }
         

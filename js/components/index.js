@@ -4,6 +4,7 @@ import RecentMenuList from "./RecentMenuList.js";
 import MenuList from "./MenuList.js";
 import CategoryList from "./CategoryList.js";
 import MenuDetail from "./MenuDetail.js";
+import OptionPopup from "./OptionPopup.js";
 
 
 customElements.define("header-part",Header)
@@ -12,3 +13,4 @@ customElements.define("recent-menu-list",RecentMenuList)
 customElements.define("menu-list",MenuList)
 customElements.define("category-tab-list",CategoryList)
 customElements.define("menu-detail-list",MenuDetail)
+customElements.define("option-popup",OptionPopup)

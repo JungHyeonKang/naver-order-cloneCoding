@@ -20,19 +20,17 @@ const TABS = [
 ];
 
 export default class TabList extends View{
-    constructor(){
+    constructor(orderTypeIndex=0,setOrderTypeIndex){
         super()
-        this.tabIndex = 0
-    }
-    onChangeTab(index){
-        this.tabIndex = index
+        this.orderTypeIndex = orderTypeIndex
+        this.setOrderTypeIndex = setOrderTypeIndex
     }
     static get properties(){ //상태 관리
       return {
-        tabIndex : {
+        orderTypeIndex : {
             type : Number
         },
-        onChangeTab : {
+        setOrderTypeIndex : {
             type : Function
         },
       }
@@ -42,14 +40,14 @@ export default class TabList extends View{
         <div class="tab-switch-box" role="tablist">
         ${TABS.map((tab , index)=>
             html`
-             <a href="#" class="tab-switch ${index === this.tabIndex ? 'is-active' : ''}" role="tab" @click=${()=>this.onChangeTab(index)}>
+             <a href="#" class="tab-switch ${index === this.orderTypeIndex ? 'is-active' : ''}" role="tab" @click=${()=>this.setOrderTypeIndex(index)}>
             ${tab.text}
             <img src="${tab.imageUrl}" alt="" class="ico-check" aria-hidden="true">
             </a>`
         )}    
         </div>
         <div class="info-main-notice">
-            ${ORDER_TYPE_MESSAGE[this.tabIndex]}
+            ${ORDER_TYPE_MESSAGE[this.orderTypeIndex]}
         </div>
         `
     }

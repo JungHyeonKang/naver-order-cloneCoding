@@ -2,31 +2,16 @@ import { html } from "../../node_modules/lit-element/lit-element"
 import View from "../view.js"
 import { getRecentMenu , getMenuGroups,getMenu} from "../api";
 export default class MenuPage extends View{
-    constructor(){
+    constructor(orderTypeIndex=0,setOrderTypeIndex){
         super()
         this.recentItems = [] // 최근 주문 리스트
         this.menuGroups = [];
         this.selectedCategory = '추천' //카테고리 추천으로 디폴트
+        this.orderTypeIndex = orderTypeIndex
+        this.setOrderTypeIndex = setOrderTypeIndex
         this.menuDetail = []
         getRecentMenu().then((response)=> this.recentItems = response)
         getMenuGroups().then((response)=> this.menuGroups = response)
-    }
-    onChangeCategory(categoryName){
-        this.selectedCategory = categoryName
-    }
-    handleCategorySelect(category){
-        this.selectedCategory = category;
-        const y = document.querySelector(`[data-scroll-id=${category}]`).getBoundingClientRect().top; //해당 돔객체 위치 찾기
-
-        window.scrollBy({
-            top: y - 140,
-            left: 0,
-            behavior: "smooth",
-          });
-    }
-    redirectDetailPage(id){
-        history.pushState(null,null,`/detail/${id}`)
-        dispatchEvent(new PopStateEvent("popstate"));
     }
     static get properties(){
         return{
@@ -45,8 +30,32 @@ export default class MenuPage extends View{
             selectedCategory : {
                 type : String  
             },
+            orderTypeIndex : {
+                type : Number  
+            },
+            setOrderTypeIndex : {
+                type : Function  
+            },
         }
     }
+    onChangeCategory(categoryName){
+        this.selectedCategory = categoryName
+    }
+    handleCategorySelect(category){
+        this.selectedCategory = category;
+        const y = document.querySelector(`[data-scroll-id=${category}]`).getBoundingClientRect().top; //해당 돔객체 위치 찾기
+
+        window.scrollBy({
+            top: y - 140,
+            left: 0,
+            behavior: "smooth",
+          });
+    }
+    redirectDetailPage(id){
+        history.pushState(null,null,`/detail/${id}`)
+        dispatchEvent(new PopStateEvent("popstate"));
+    }
+    
    render(){
     const categories = this.menuGroups.map(({category,categoryName}= menuGroup)=>({category,categoryName}))
     
@@ -67,7 +76,10 @@ export default class MenuPage extends View{
                 </div>
 
                 <!-- 주문분류 -->
-                <tab-list></tab-list>
+                <tab-list 
+                .orderTypeIndex=${this.orderTypeIndex} 
+                .setOrderTypeIndex=${this.setOrderTypeIndex}>
+                </tab-list>
                 
                 <div class="info-main-notice alert hidden">
                     <svg aria-hidden="true" class="ico-clock" viewBox="0 0 13 13" width="13" height="13" fill="none"
