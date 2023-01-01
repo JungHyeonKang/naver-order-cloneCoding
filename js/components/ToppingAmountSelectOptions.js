@@ -1,12 +1,28 @@
 import {html} from "lit-element/lit-element"
 import View from "../view.js"
+import SpinButton from "./SpinButton.js"
 export default class ToppingAmountSelectOptions extends View{
-    constructor(){
+    constructor(toppingAmountSelectOptions,menuAmount,increaseOptionAmount,decreaseOptionAmount){
         super()
+        this.toppingAmountSelectOptions =toppingAmountSelectOptions
+        this.menuAmount = menuAmount
+        this.increaseOptionAmount = increaseOptionAmount
+        this.decreaseOptionAmount = decreaseOptionAmount
     }
     static get properties(){
         return {
-
+            toppingAmountSelectOptions : {
+                type : Array
+            },
+            increaseOptionAmount : {
+                type : Function
+            },
+            decreaseOptionAmount : {
+                type : Function
+            },
+            menuAmount : {
+                type : Number
+            },
         }
     }
 
@@ -21,36 +37,18 @@ export default class ToppingAmountSelectOptions extends View{
             <p class="desc">최대 5개까지 선택할 수 있습니다.</p>
         </div>
         <ul class="option-list">
+            ${this.toppingAmountSelectOptions.map(({name, price , amount})=>html` 
             <li class="option-item">
                 <label class="label checked">
-                    <span class="label-txt">치킨 <span class="price">+1,500원</span></span>
+                    <span class="label-txt">${name} <span class="price">+${price}원</span></span>
                 </label>
-                <div class="amount-select">
-                    <button class="btn-minus enabled" aira-label="빼기"></button>
-                    <span class="amount">2</span>
-                    <button class="btn-plus enabled" aria-label="더하기"></button>
-                </div>
+                ${SpinButton({
+                    count : amount , 
+                    onIncreaseAmount : ()=>this.increaseOptionAmount(name),
+                    onDecreaseAmount : ()=>this.decreaseOptionAmount(name) 
+                })}
             </li>
-            <li class="option-item">
-                <label class="label">
-                    <span class="label-txt">에그 <span class="price">+900원</span></span>
-                </label>
-                <div class="amount-select">
-                    <button class="btn-minus" aira-label="빼기" disabled></button>
-                    <span class="amount">1</span>
-                    <button class="btn-plus enabled" aria-label="더하기"></button>
-                </div>
-            </li>
-            <li class="option-item">
-                <label class="label">
-                    <span class="label-txt">치킨소시지 <span class="price">+1,900원</span></span>
-                </label>
-                <div class="amount-select">
-                    <button class="btn-minus" aira-label="빼기" disabled></button>
-                    <span class="amount">1</span>
-                    <button class="btn-plus enabled" aria-label="더하기"></button>
-                </div>
-            </li>
+        `)}
         </ul>
     </div>`
     }

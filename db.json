@@ -578,22 +578,22 @@
       "baseOptions": [
         {
           "name": "추천대로",
-          "isSelected": false
+          "isSelected": true
         },
         {
           "name": "채소볼",
           "isSelected": false
         },
         {
-          "name": "곡물볼",
+          "name": "치즈볼",
           "isSelected": false
         }
       ],
       "toppingSelectOptions": [
         {
-          "name": "채소추가(기본 제공량의 30% 추가)",
-          "isSelected": false,
-          "price": 900
+          "name": "채소추가(기본 제공량의 80% 추가)",
+          "isSelected": true,
+          "price": 1900
         },
         {
           "name": "곡물추가(기본 제공량의 50% 추가)",
@@ -610,7 +610,7 @@
         {
           "name": "치킨",
           "amount": 0,
-          "price": 1500
+          "price": 1800
         },
         {
           "name": "에그",

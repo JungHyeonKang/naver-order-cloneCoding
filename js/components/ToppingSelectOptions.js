@@ -1,12 +1,19 @@
 import {html} from "lit-element/lit-element"
 import View from "../view.js"
 export default class ToppingSelectOptions extends View{
-    constructor(){
+    constructor(selectOptions , toggleOption){
         super()
+        this.selectOptions = selectOptions
+        this.toggleOption = toggleOption
     }
     static get properties(){
         return {
-
+            selectOptions : {
+                type : Array
+            },
+            toggleOption : {
+                type : Function
+            },
         }
     }
 
@@ -21,27 +28,15 @@ export default class ToppingSelectOptions extends View{
             <p class="desc">최대 5개까지 선택할 수 있습니다.</p>
         </div>
         <ul class="option-list">
+            ${this.selectOptions.map(({name , price , isSelected})=>html` 
             <li class="option-item">
-                <input type="checkbox" id="chk1" class="input-check" checked>
-                <label for="chk1" class="label">
-                    <span class="label-txt">채소추가(기본 제공량의 30% 추가) <span class="price">+900원</span></span>
+                <input type="checkbox" id="${name}" class="input-check" .checked="${isSelected}" @click=${()=>this.toggleOption(name)}>
+                <label for="${name}" class="label">
+                    <span class="label-txt">${name} <span class="price">+${price}원</span></span>
                     <span class="label-icon"></span>
                 </label>
             </li>
-            <li class="option-item">
-                <input type="checkbox" id="chk2" class="input-check">
-                <label for="chk2" class="label">
-                    <span class="label-txt">곡물추가(기본 제공량의 50% 추가) <span class="price">+900원</span></span>
-                    <span class="label-icon"></span>
-                </label>
-            </li>
-            <li class="option-item">
-                <input type="checkbox" id="chk3" class="input-check">
-                <label for="chk3" class="label">
-                    <span class="label-txt">시저 드레싱 추가 <span class="price">+900원</span></span>
-                    <span class="label-icon"></span>
-                </label>
-            </li>
+            `)}
         </ul>
     </div>`
     }

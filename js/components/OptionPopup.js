@@ -1,6 +1,7 @@
 import {html} from "../../node_modules/lit-element/lit-element"
 import View from "../view.js"
 import SpinButton from "./SpinButton.js"
+import {getKoreanMoneyString} from "../utils/currency.js"
 import { getOptions } from "../api"
 
 const DEFAULT_OPTION = {
@@ -54,6 +55,15 @@ export default class OptionPopup extends View{
             toggleBaseOptions : {
                 type : Function
             },
+            increaseOptionAmount : {
+                type : Function
+            },
+            decreaseOptionAmount : {
+                type : Function
+            },
+            getFinalPrice : {
+                type : Function
+            },
         }
     }
     toggleBaseOptions(optionName){
@@ -66,6 +76,41 @@ export default class OptionPopup extends View{
             option.isSelected = false
         })
         this.option = newOption;
+    }
+    toggleSelectOptions(optionName){
+       const newOption = {...this.option}
+       const targetOption=newOption.toppingSelectOptions.find((option)=>option.name === optionName)
+       targetOption.isSelected = !targetOption.isSelected
+       this.option = newOption
+    }
+    increaseOptionAmount(optionName){
+        const newOption = {...this.option}
+        const targetOption = newOption.toppingAmountSelectOptions.find((option)=> option.name=== optionName)
+        targetOption.amount +=1
+        this.option = newOption
+
+    }
+    decreaseOptionAmount(optionName){
+        const newOption = {...this.option}
+        const targetOption = newOption.toppingAmountSelectOptions.find((option)=>option.name === optionName)
+        if(targetOption.amount < 1) return;
+        targetOption.amount -= 1
+        this.option = newOption
+    }
+    getFinalPrice(){
+        let finalPrice = this.menuInfo.price
+        this.option.toppingSelectOptions.forEach(({isSelected,price})=>{
+            if(isSelected){
+                finalPrice += price;
+            }
+        }) 
+        this.option.toppingAmountSelectOptions.forEach(({price,amount})=>{
+            if(amount !==0){
+                finalPrice += price * amount
+            }
+        })
+        console.log(finalPrice* this.amount)
+        return finalPrice * this.menuAmount
     }
     render(){
         return html` 
@@ -111,12 +156,22 @@ export default class OptionPopup extends View{
                     .baseOptions=${this.option.baseOptions} 
                     .toggleOption=${this.toggleBaseOptions.bind(this)}>
                     </topping-baseoptions-list>
-                    <topping-selectoptions-list></topping-selectoptions-list>
-                    <topping-amountoptions-list></topping-amountoptions-list>
+
+                    <topping-selectoptions-list 
+                    .selectOptions=${this.option.toppingSelectOptions} 
+                    .toggleOption=${this.toggleSelectOptions.bind(this)}>
+                    </topping-selectoptions-list>
+
+                    <topping-amountoptions-list 
+                    .toppingAmountSelectOptions=${this.option.toppingAmountSelectOptions} 
+                    .menuAmount=${this.menuAmount} 
+                    .increaseOptionAmount=${this.increaseOptionAmount.bind(this)} 
+                    .decreaseOptionAmount=${this.decreaseOptionAmount.bind(this)}>
+                    </topping-amountoptions-list>
                 </div>
 
                 <div class="content-bottom">
-                    <button class="btn-order">1개 담기 9,999원</button>
+                    <button class="btn-order">${this.menuAmount}개 담기 ${getKoreanMoneyString(this.getFinalPrice())}원</button>
                 </div>
             </div>
         </div>
