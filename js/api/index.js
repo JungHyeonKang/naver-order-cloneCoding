@@ -35,4 +35,17 @@ async function getMenu(menuId){
     return data
 }
 
-export {getRecentMenu , getMenuGroups , getMenu}
+async function getOptions(menuId){
+    const response =await fetch(`http://localhost:3000/options/${menuId}`,{
+        method : 'GET',
+        headers : {
+            Accept : 'application/json'
+        }
+    })
+    const data = response.json()
+
+    return data;
+
+}
+
+export {getRecentMenu , getMenuGroups , getMenu , getOptions}

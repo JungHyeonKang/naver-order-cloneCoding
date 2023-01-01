@@ -578,7 +578,7 @@
       "baseOptions": [
         {
           "name": "추천대로",
-          "isSelected": true
+          "isSelected": false
         },
         {
           "name": "채소볼",

@@ -4,7 +4,7 @@ import {getKoreanMoneyString} from "../utils/currency.js"
 import SpinButton from "./SpinButton.js"
 
 export default class MenuDetail extends View{
-    constructor(menuInfo={} ,menuAmount,onIncreaseAmount,onDecreaseAmount,orderTypeIndex=0){
+    constructor(menuInfo={} ,menuAmount,onIncreaseAmount,onDecreaseAmount,orderTypeIndex=0,openOptionPopup){
         super()
         this.menuInfo = menuInfo
         this.menuAmount = menuAmount
@@ -12,6 +12,7 @@ export default class MenuDetail extends View{
         this.onDecreaseAmount = onDecreaseAmount
         this.orderType= orderTypeIndex === 0 ? '포장' : '매장' 
         this.orderTypeIndex = orderTypeIndex
+        this.openOptionPopup = openOptionPopup
     }
     static get properties() {
         return {
@@ -32,6 +33,9 @@ export default class MenuDetail extends View{
             },
             orderTypeIndex : {
                 type : Number  
+            },
+            openOptionPopup : {
+                type : Function
             },
         }
         
@@ -87,7 +91,7 @@ export default class MenuDetail extends View{
                              onDecreaseAmount : this.onDecreaseAmount 
                         })}
                     </div>
-                    <button class="btn-order" onClick="popupOpen()">1개 담기 9,999원</button>
+                    <button class="btn-order" @click=${()=>this.openOptionPopup()}>${this.menuAmount}개 담기 ${getKoreanMoneyString(this.menuInfo.price * this.menuAmount)}원</button>
                     <!-- <button class="btn-order" disabled>지금 주문 가능한 시간이 아닙니다.</button> -->
                 </div>
                 <!-- // 메뉴주문영역 -->

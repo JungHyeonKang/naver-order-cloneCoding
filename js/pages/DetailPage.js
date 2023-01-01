@@ -1,6 +1,6 @@
 import { html } from "../../node_modules/lit-element/lit-element"
 import View from "../view.js"
-import { getRecentMenu , getMenuGroups,getMenu} from "../api";
+import { getMenu} from "../api";
 import {DEFAULT_MENU} from "../utils/menu.js"
 export default class DetailPage extends View{
     constructor(orderTypeIndex=0,setOrderTypeIndex){
@@ -10,7 +10,8 @@ export default class DetailPage extends View{
         this.orderTypeIndex = orderTypeIndex
         this.setOrderTypeIndex = setOrderTypeIndex
         this.menuAmount =1
-         getMenu(menuId).then((menu)=>this.menuInfo = menu)
+        this.isPopupOpened = false 
+        getMenu(menuId).then((menu)=>this.menuInfo = menu)
     }
     static get properties(){
         return {
@@ -35,6 +36,15 @@ export default class DetailPage extends View{
             setOrderTypeIndex : {
                 type : Function  
             },
+            openOptionPopup : {
+                type : Function  
+            },
+            isPopupOpened : {
+                type : Boolean  
+            },
+            closeOptionPopup : {
+                type : Function  
+            },
         }
         
     }
@@ -44,6 +54,12 @@ export default class DetailPage extends View{
     onDecreaseAmount(){
         if(this.menuAmount <= 1) return
         this.menuAmount -=1
+    }
+    openOptionPopup(){
+        this.isPopupOpened = true
+    }
+    closeOptionPopup(){
+        this.isPopupOpened = false
     }
     render(){
         return html `
@@ -58,7 +74,8 @@ export default class DetailPage extends View{
        .menuAmount=${this.menuAmount} 
        .onIncreaseAmount=${this.onIncreaseAmount.bind(this)} 
        .onDecreaseAmount=${this.onDecreaseAmount.bind(this)}
-       .orderTypeIndex=${this.orderTypeIndex}>
+       .orderTypeIndex=${this.orderTypeIndex}
+       .openOptionPopup=${this.openOptionPopup.bind(this)}>
        </menu-detail-list>
        <!-- //메뉴주문정보영역 -->
 
@@ -121,7 +138,11 @@ export default class DetailPage extends View{
        .menuInfo=${this.menuInfo} 
        .menuAmount=${this.menuAmount} 
        .onIncreaseAmount=${this.onIncreaseAmount.bind(this)} 
-       .onDecreaseAmount=${this.onDecreaseAmount.bind(this)}></option-popup>
+       .onDecreaseAmount=${this.onDecreaseAmount.bind(this)}
+       .isPopupOpened=${this.isPopupOpened}
+       .closeOptionPopup=${this.closeOptionPopup.bind(this)}
+       .orderTypeIndex=${this.orderTypeIndex}>
+       </option-popup>
         <!-- //옵션팝업영역 -->
     </div>`
     }

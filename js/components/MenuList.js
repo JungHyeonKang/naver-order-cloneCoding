@@ -59,10 +59,13 @@ export default class MenuList extends View{
                                 <p class="menu-price">${item.price}원</p>
                             </div>
                         </a>
+                        ${item.soldOut? html`<a class="btn-cart disabled"> 품절 </a>` 
+                        : html`
                         <a href="#" class="btn-cart">
                             <img class="ico-cart" src="./assets/images/ico-cart-fill-green.svg" alt="주문하기">
-                            <span class="num">1</span>
-                        </a>
+                            <span class="num">2</span>
+                        </a>` }
+                        
                     </li>`
                         )}
                 </ul>
