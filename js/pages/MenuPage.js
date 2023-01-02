@@ -36,6 +36,12 @@ export default class MenuPage extends View{
             setOrderTypeIndex : {
                 type : Function  
             },
+            redirectDetailPage : {
+                type : Function  
+            },
+            redirectOrderPage : {
+                type : Function  
+            },
         }
     }
     onChangeCategory(categoryName){
@@ -54,6 +60,10 @@ export default class MenuPage extends View{
     redirectDetailPage(id){
         history.pushState(null,null,`/detail/${id}`)
         dispatchEvent(new PopStateEvent("popstate"));
+    }
+    redirectOrderPage(){
+        history.pushState(null,null,`/order`)
+        dispatchEvent(new PopStateEvent('popstate'))
     }
     
    render(){
@@ -106,8 +116,7 @@ export default class MenuPage extends View{
     <!-- 메뉴리스트영역 -->
     ${this.menuGroups.map((menuGroup)=>
             html`<menu-list .menuGroup=${menuGroup} .redirectDetailPage=${this.redirectDetailPage.bind(this)}></menu-list>`
-        )}
-    
+        )}   
     <!-- // 메뉴리스트영역 -->
 
     <!-- 담은메뉴영역 -->
@@ -117,7 +126,7 @@ export default class MenuPage extends View{
                 <p class="menu-name">메뉴이름</p>
                 <p class="menu-price">9,999원</p>
             </div>
-            <a href="./order.html" class="btn-order">
+            <a class="btn-order" @click=${()=>this.redirectOrderPage()}>
                 <span class="txt">주문하기</span>
                 <span class="icon">
                     <img src="./assets/images/ico-cart-fill.svg" alt="" aria-hidden="true" class="ico-cart">
@@ -127,6 +136,7 @@ export default class MenuPage extends View{
         </div>
     </div>
     <!-- //담은메뉴영역 -->
+
     <!-- 맨위로 -->
     <div class="go-to-top">
         <a href="#" class="link">Top<i class="ico-up"></i></a>

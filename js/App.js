@@ -6,6 +6,7 @@ export default class App extends View{
         super()
         this.currenPage = "menu"
         this.orderTypeIndex =0
+        this.cartItems = []
         window.onpopstate = () =>{
             const [,currenPage]=location.pathname.split("/")
             this.currenPage = currenPage
@@ -22,11 +23,16 @@ export default class App extends View{
             setOrderTypeIndex : {
                 type : Function  
             },
+            cartItems : {
+                type : Array  
+            },
         }
     }
     setOrderTypeIndex(index){
-        console.log(index)
         this.orderTypeIndex = index
+    }
+    addCartItem(){
+
     }
     route(){
         switch (this.currenPage) {
@@ -35,6 +41,10 @@ export default class App extends View{
                 .orderTypeIndex=${this.orderTypeIndex} 
                 .setOrderTypeIndex=${this.setOrderTypeIndex.bind(this)}>
                 </detail-page>`
+            
+            case "order":
+                return html `<order-page>
+                </order-page>`    
                
             default:
                 return html `<menu-page 
