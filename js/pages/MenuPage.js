@@ -2,7 +2,7 @@ import { html } from "../../node_modules/lit-element/lit-element"
 import View from "../view.js"
 import { getRecentMenu , getMenuGroups,getMenu} from "../api";
 export default class MenuPage extends View{
-    constructor(orderTypeIndex=0,setOrderTypeIndex){
+    constructor(orderTypeIndex=0,setOrderTypeIndex,cartItems=[]){
         super()
         this.recentItems = [] // 최근 주문 리스트
         this.menuGroups = [];
@@ -10,6 +10,7 @@ export default class MenuPage extends View{
         this.orderTypeIndex = orderTypeIndex
         this.setOrderTypeIndex = setOrderTypeIndex
         this.menuDetail = []
+        this.cartItems = cartItems
         getRecentMenu().then((response)=> this.recentItems = response)
         getMenuGroups().then((response)=> this.menuGroups = response)
     }
@@ -42,6 +43,9 @@ export default class MenuPage extends View{
             redirectOrderPage : {
                 type : Function  
             },
+            cartItems : {
+                type : Array  
+            },
         }
     }
     onChangeCategory(categoryName){
@@ -65,10 +69,12 @@ export default class MenuPage extends View{
         history.pushState(null,null,`/order`)
         dispatchEvent(new PopStateEvent('popstate'))
     }
-    
    render(){
     const categories = this.menuGroups.map(({category,categoryName}= menuGroup)=>({category,categoryName}))
-    
+    const cartItemsString = this.cartItems.map((item)=>item.menuInfo.name).join("+")
+    const cartItemTotalPrice = this.cartItems.reduce((acc,item)=>{
+        return acc + item.price
+    },0)
     return html `
     <!-- 주문정보영역 -->
     <div class="order-info-area">
@@ -120,21 +126,25 @@ export default class MenuPage extends View{
     <!-- // 메뉴리스트영역 -->
 
     <!-- 담은메뉴영역 -->
+    ${this.cartItems.length ===0 
+    ? "" 
+    : html`
     <div class="order-box-area">
         <div class="common-inner">
             <div>
-                <p class="menu-name">메뉴이름</p>
-                <p class="menu-price">9,999원</p>
+                <p class="menu-name">${cartItemsString}</p>
+                <p class="menu-price">${cartItemTotalPrice}원</p>
             </div>
             <a class="btn-order" @click=${()=>this.redirectOrderPage()}>
                 <span class="txt">주문하기</span>
                 <span class="icon">
                     <img src="./assets/images/ico-cart-fill.svg" alt="" aria-hidden="true" class="ico-cart">
-                    <span class="num">1</span>
+                    <span class="num">${this.cartItems.length}</span>
                 </span>
             </a>
         </div>
     </div>
+    `} 
     <!-- //담은메뉴영역 -->
 
     <!-- 맨위로 -->

@@ -31,15 +31,22 @@ export default class App extends View{
     setOrderTypeIndex(index){
         this.orderTypeIndex = index
     }
-    addCartItem(){
-
+    addCartItem(menu){
+        console.log("menu" , menu)
+        const newCartItems = [...this.cartItems]
+        newCartItems.push(menu)
+        this.cartItems = newCartItems;
+        console.log(this.cartItems)
+        history.pushState(null,null,"/")
+        dispatchEvent(new PopStateEvent("popstate"))
     }
     route(){
         switch (this.currenPage) {
             case "detail":
                 return html `<detail-page
                 .orderTypeIndex=${this.orderTypeIndex} 
-                .setOrderTypeIndex=${this.setOrderTypeIndex.bind(this)}>
+                .setOrderTypeIndex=${this.setOrderTypeIndex.bind(this)}
+                .addCartItem=${this.addCartItem.bind(this)}>
                 </detail-page>`
             
             case "order":
@@ -49,7 +56,8 @@ export default class App extends View{
             default:
                 return html `<menu-page 
                 .orderTypeIndex=${this.orderTypeIndex} 
-                .setOrderTypeIndex=${this.setOrderTypeIndex.bind(this)}>
+                .setOrderTypeIndex=${this.setOrderTypeIndex.bind(this)}
+                .cartItems=${this.cartItems}>
                 </menu-page>`                
         }
     }

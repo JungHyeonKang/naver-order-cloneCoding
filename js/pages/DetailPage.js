@@ -3,7 +3,7 @@ import View from "../view.js"
 import { getMenu} from "../api";
 import {DEFAULT_MENU} from "../utils/menu.js"
 export default class DetailPage extends View{
-    constructor(orderTypeIndex=0,setOrderTypeIndex){
+    constructor(orderTypeIndex=0,setOrderTypeIndex,addCartItem){
         super()
         const [menuId]= location.pathname.split("/").splice(-1)
         this.menuInfo = DEFAULT_MENU;
@@ -11,6 +11,7 @@ export default class DetailPage extends View{
         this.setOrderTypeIndex = setOrderTypeIndex
         this.menuAmount =1
         this.isPopupOpened = false 
+        this.addCartItem = addCartItem
         getMenu(menuId).then((menu)=>this.menuInfo = menu)
     }
     static get properties(){
@@ -43,6 +44,9 @@ export default class DetailPage extends View{
                 type : Boolean  
             },
             closeOptionPopup : {
+                type : Function  
+            },
+            addCartItem : {
                 type : Function  
             },
         }
@@ -141,7 +145,8 @@ export default class DetailPage extends View{
        .onDecreaseAmount=${this.onDecreaseAmount.bind(this)}
        .isPopupOpened=${this.isPopupOpened}
        .closeOptionPopup=${this.closeOptionPopup.bind(this)}
-       .orderTypeIndex=${this.orderTypeIndex}>
+       .orderTypeIndex=${this.orderTypeIndex}
+       .addCartItem=${this.addCartItem.bind(this)}>
        </option-popup>
         <!-- //옵션팝업영역 -->
     </div>`

@@ -12,7 +12,7 @@ const DEFAULT_OPTION = {
   };
 
 export default class OptionPopup extends View{
-    constructor(menuInfo,menuAmount,onIncreaseAmount,onDecreaseAmount,isPopupOpened,closeOptionPopup,orderTypeIndex=0){
+    constructor(menuInfo,menuAmount,onIncreaseAmount,onDecreaseAmount,isPopupOpened,closeOptionPopup,orderTypeIndex=0,addCartItem){
         super()
         this.isOpened = false;
         this.menuInfo = menuInfo
@@ -21,8 +21,9 @@ export default class OptionPopup extends View{
         this.onDecreaseAmount = onDecreaseAmount
         this.isPopupOpened = isPopupOpened
         this.closeOptionPopup = closeOptionPopup
-        this.orderTypeIndex = 
+        this.orderTypeIndex = orderTypeIndex
         this.option = DEFAULT_OPTION
+        this.addCartItem = orderTypeIndex
         const [id] =location.pathname.split("/").splice(-1)
          getOptions(id).then((option)=>this.option = option)
     }
@@ -62,6 +63,9 @@ export default class OptionPopup extends View{
                 type : Function
             },
             getFinalPrice : {
+                type : Function
+            },
+            addCartItem : {
                 type : Function
             },
         }
@@ -109,10 +113,10 @@ export default class OptionPopup extends View{
                 finalPrice += price * amount
             }
         })
-        console.log(finalPrice* this.amount)
         return finalPrice * this.menuAmount
     }
     render(){
+        
         return html` 
         <!-- 옵션팝업영역 -->
         <div class="option-popup-area ${this.isPopupOpened === true ? 'show' : ''}">
@@ -171,7 +175,15 @@ export default class OptionPopup extends View{
                 </div>
 
                 <div class="content-bottom">
-                    <button class="btn-order">${this.menuAmount}개 담기 ${getKoreanMoneyString(this.getFinalPrice())}원</button>
+                    <button class="btn-order" 
+                    @click=${()=>this.addCartItem({
+                        amount : this.menuAmount,
+                        menuInfo : this.menuInfo,
+                        option : this.option,
+                        price : this.getFinalPrice()
+                    })}>
+                    ${this.menuAmount}개 담기 ${getKoreanMoneyString(this.getFinalPrice())}원
+                    </button>
                 </div>
             </div>
         </div>
