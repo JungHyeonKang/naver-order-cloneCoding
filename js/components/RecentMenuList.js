@@ -1,5 +1,6 @@
 import {html} from "../../node_modules/lit-element/lit-element"
 import View from "../view.js"
+import { getKoreanMoneyString } from "../utils/currency"
 export default class RecentMenuList extends View{
     constructor(recentItems=[],redirectDetailPage){
         super()
@@ -33,7 +34,7 @@ export default class RecentMenuList extends View{
                         <img class="menu-img" src="${imageUrl}" alt="메뉴사진">
                     </div>
                     <p class="menu-name">${name}</p>
-                    <p class="menu-price">${price}원</p>
+                    <p class="menu-price">${getKoreanMoneyString(price)}원</p>
                 </a>
                 <a href="#" class="badge-cart">
                     <img src="./assets/images/ico-cart.svg" alt="주문하기" class="ico-cart">

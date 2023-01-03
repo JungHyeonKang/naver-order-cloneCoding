@@ -8,6 +8,8 @@ import OptionPopup from "./OptionPopup.js";
 import ToppingBaseOptions from "./ToppingBaseOptions.js";
 import ToppingSelectOptions from "./ToppingSelectOptions.js";
 import ToppingAmountSelectOptions from "./ToppingAmountSelectOptions.js";
+import OrderTypeList from "./OrderTypeList.js";
+import OrderSelectList from "./OrderSelectList.js";
 
 
 customElements.define("header-part",Header)
@@ -20,3 +22,5 @@ customElements.define("option-popup",OptionPopup)
 customElements.define("topping-baseoptions-list",ToppingBaseOptions)
 customElements.define("topping-selectoptions-list",ToppingSelectOptions)
 customElements.define("topping-amountoptions-list",ToppingAmountSelectOptions)
+customElements.define("order-type-list",OrderTypeList)
+customElements.define("order-select-list",OrderSelectList)

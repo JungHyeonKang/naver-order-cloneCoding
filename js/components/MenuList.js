@@ -1,5 +1,6 @@
 import {html} from "../../node_modules/lit-element/lit-element"
 import View from "../view.js"
+import { getKoreanMoneyString } from "../utils/currency"
 export default class MenuList extends View{
     constructor(menuGroup=[],redirectDetailPage){
         super()
@@ -56,7 +57,7 @@ export default class MenuList extends View{
                                     <span class="menu-number-of-order">주문수<em>${item.orderCount}</em></span>
                                 </div>
                                 <p class="menu-desc">${item.description}</p>
-                                <p class="menu-price">${item.price}원</p>
+                                <p class="menu-price">${getKoreanMoneyString(item.price)}원</p>
                             </div>
                         </a>
                         ${item.soldOut? html`<a class="btn-cart disabled"> 품절 </a>` 

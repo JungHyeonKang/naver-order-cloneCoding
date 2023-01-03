@@ -1,6 +1,7 @@
 import { html } from "../../node_modules/lit-element/lit-element"
 import View from "../view.js"
 import { getRecentMenu , getMenuGroups,getMenu} from "../api";
+import { getKoreanMoneyString } from "../utils/currency";
 export default class MenuPage extends View{
     constructor(orderTypeIndex=0,setOrderTypeIndex,cartItems=[]){
         super()
@@ -133,7 +134,7 @@ export default class MenuPage extends View{
         <div class="common-inner">
             <div>
                 <p class="menu-name">${cartItemsString}</p>
-                <p class="menu-price">${cartItemTotalPrice}원</p>
+                <p class="menu-price">${getKoreanMoneyString(cartItemTotalPrice)}원</p>
             </div>
             <a class="btn-order" @click=${()=>this.redirectOrderPage()}>
                 <span class="txt">주문하기</span>

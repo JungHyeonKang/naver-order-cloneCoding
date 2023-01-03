@@ -50,7 +50,9 @@ export default class App extends View{
                 </detail-page>`
             
             case "order":
-                return html `<order-page>
+                return html `<order-page 
+                .orderTypeIndex=${this.orderTypeIndex} 
+                .cartItems=${this.cartItems}>
                 </order-page>`    
                
             default:
