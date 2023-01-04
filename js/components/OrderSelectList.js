@@ -3,10 +3,12 @@ import View from "../view.js"
 import { getKoreanMoneyString } from "../utils/currency.js";
 import SpinButton from "./SpinButton.js";
 export default class OrderSelectList extends View{
-    constructor(orderTypeIndex=0,cartItems=[]){
+    constructor(orderTypeIndex=0,cartItems=[],increaseOrderAmount,decreaseOrderAmount){
         super()
         this.orderTypeIndex = orderTypeIndex;
-        this.cartItems = cartItems
+        this.cartItems = cartItems;
+        this.increaseOrderAmount=increaseOrderAmount;
+        this.decreaseOrderAmount = decreaseOrderAmount
      }
      static get properties(){
          return {
@@ -22,16 +24,21 @@ export default class OrderSelectList extends View{
             decreaseOrderAmount : {
                 type : Function
             },
+            getFinalPrice : {
+                type : Function
+            },
          }
      }
-    increaseOrderAmount(){
-
-    }
-    decreaseOrderAmount(){
-
-    }
+     getFinalPrice(){
+        const finalPrice =this.cartItems.reduce((acc , item)=>{
+            return acc + item.price * item.amount
+        },0)
+        return finalPrice
+     }
+        
     render(){
         return html`
+        ${console.log("this.cartItemsthis.cartItems " ,this.cartItems)}
         <div class="order-content-body">
         <!-- 담은 메뉴 없음 -->
         ${this.cartItems.length === 0 
@@ -40,6 +47,7 @@ export default class OrderSelectList extends View{
         <p class="txt">담은 메뉴가 없습니다.</p>
         </div>` 
         : html` 
+        <!-- 담은 메뉴 있음 -->
         <ul class="menu-list">
         ${this.cartItems.map((item)=> html 
         `<li class="menu-item">
@@ -54,33 +62,31 @@ export default class OrderSelectList extends View{
             <p class="menu-desc">${item.menuInfo.description}</p>
             <button class="btn-option">옵션변경</button>
             <div class="amount-and-price">
-                <div class="amount-select">
-                    <button class="btn-minus enabled" aira-label="빼기"></button>
-                    <span class="amount">${item.amount}</span>
-                    <button class="btn-plus enabled" aria-label="더하기"></button>
-                </div>
-                <p class="menu-price">${getKoreanMoneyString(item.price)}원</p>
+                ${SpinButton({
+                    count : item.amount,
+                    onIncreaseAmount : () => this.increaseOrderAmount(item.menuInfo.id),
+                    onDecreaseAmount : () => this.decreaseOrderAmount(item.menuInfo.id)
+                })}
+                <p class="menu-price">${getKoreanMoneyString(item.price * item.amount)}원</p>
             </div>
         </div>
         <button class="btn-delete">
             <img src="./assets/images/ico-close.svg" alt="삭제" class="ico-delete">
         </button>
         </li>
+        <!-- // 담은 메뉴 있음 -->
     `)}
     </ul>
 
     <div class="order-total">
     <span class="total-txt">총 주문금액</span>
-    <span class="total-price">29,997원</span>
+    <span class="total-price">${getKoreanMoneyString(this.getFinalPrice())}원</span>
     </div>
     `}   
-        <!-- // 담은 메뉴 없음 -->
 
-        <!-- 담은 메뉴 있음 -->
        
 
        
-        <!-- // 담은 메뉴 있음 -->
     </div>`
     }
 }

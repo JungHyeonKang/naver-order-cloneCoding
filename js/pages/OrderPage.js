@@ -20,11 +20,30 @@ export default class MenuPage extends View{
             redirectMenuPage : {
                 type : Function
             },
+            increaseOrderAmount : {
+                type : Function
+            },
+            decreaseOrderAmount : {
+                type : Function
+            },
         }
     }
     redirectMenuPage(){
         history.pushState(null,null,"/")
         dispatchEvent(new PopStateEvent("popstate"))
+    }
+    increaseOrderAmount(menuId){
+        const newCartItems = [...this.cartItems]
+        const targetItem = newCartItems.find((item)=>item.menuInfo.id === menuId)
+        targetItem.amount += 1
+        this.cartItems = newCartItems;
+    }
+    decreaseOrderAmount(menuId){
+        const newCartItem = [...this.cartItems]
+        const targetItem = newCartItem.find((item)=>item.menuInfo.id === menuId)
+        if(targetItem.amount <= 1) return;
+        targetItem.amount -= 1
+        this.cartItems = newCartItem
     }
     render(){
         return html`
@@ -43,10 +62,12 @@ export default class MenuPage extends View{
             <div class="order-content">
                 <div class="common-inner">
                     <order-type-list .orderTypeIndex=${this.orderTypeIndex} .cartItems=${this.cartItems}></order-type-list>
-                    
+
                     <order-select-list 
                     .orderTypeIndex=${this.orderTypeIndex} 
-                    .cartItems=${this.cartItems}>
+                    .cartItems=${this.cartItems}
+                    .increaseOrderAmount=${this.increaseOrderAmount.bind(this)}
+                    .decreaseOrderAmount=${this.decreaseOrderAmount.bind(this)}>
                     </order-select-list>
 
                     

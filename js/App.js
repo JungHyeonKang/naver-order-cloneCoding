@@ -32,11 +32,9 @@ export default class App extends View{
         this.orderTypeIndex = index
     }
     addCartItem(menu){
-        console.log("menu" , menu)
         const newCartItems = [...this.cartItems]
         newCartItems.push(menu)
         this.cartItems = newCartItems;
-        console.log(this.cartItems)
         history.pushState(null,null,"/")
         dispatchEvent(new PopStateEvent("popstate"))
     }
