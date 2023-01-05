@@ -38,7 +38,6 @@ export default class OrderSelectList extends View{
         
     render(){
         return html`
-        ${console.log("this.cartItemsthis.cartItems " ,this.cartItems)}
         <div class="order-content-body">
         <!-- 담은 메뉴 없음 -->
         ${this.cartItems.length === 0 

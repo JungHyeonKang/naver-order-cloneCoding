@@ -8,6 +8,9 @@ export default class MenuPage extends View{
         super()
         this.orderTypeIndex = orderTypeIndex;
         this.cartItems = cartItems
+        this.needDisposables = true;
+        this.requestText = "";
+        this.contactText = ""
     }
     static get properties(){
         return {
@@ -24,6 +27,21 @@ export default class MenuPage extends View{
                 type : Function
             },
             decreaseOrderAmount : {
+                type : Function
+            },
+            setNeedDisposables : {
+                type : Function
+            },
+            needDisposables : {
+                type : Boolean
+            },
+            requestText : {
+                type : String
+            },
+            contactText : {
+                type : String
+            },
+            onChangeRequestText : {
                 type : Function
             },
         }
@@ -44,6 +62,15 @@ export default class MenuPage extends View{
         if(targetItem.amount <= 1) return;
         targetItem.amount -= 1
         this.cartItems = newCartItem
+    }
+    setNeedDisposables(needDisposables){
+        this.needDisposables = needDisposables
+    }
+    onChangeRequestText(){
+        this.requestText = document.querySelector(".requestText").value
+    }
+    onChangeContactText(){
+        this.contactText = document.querySelector(".contactText").value
     }
     render(){
         return html`
@@ -86,22 +113,22 @@ export default class MenuPage extends View{
                                 <p class="info-title">일회용 수저, 포크</p>
                                 <div class="option-group">
                                     <div class="option-item">
-                                        <input type="radio" id="need" class="input-radio" name="disposables" checked>
+                                        <input type="radio" id="need" class="input-radio" name="disposables" .checked=${this.needDisposables} @click=${()=>this.setNeedDisposables(true)}>
                                         <label for="need" class="input-radio-button need">필요해요</label>
                                     </div>
                                     <div class="option-item">
-                                        <input type="radio" id="no-need" class="input-radio" name="disposables">
+                                        <input type="radio" id="no-need" class="input-radio" name="disposables" .checked=${!this.needDisposables} @click=${()=>this.setNeedDisposables(false)}>
                                         <label for="no-need" class="input-radio-button no-need">필요 없어요</label>
                                     </div>
                                 </div>
                             </li>
                             <li class="info-item">
                                 <p class="info-title">요청사항</p>
-                                <input type="text" placeholder="(선택) 요청사항을 입력해 주세요." class="input-text">
+                                <input type="text" id="fuck" placeholder="(선택) 요청사항을 입력해 주세요." class="input-text requestText" value=${this.requestText} @change=${()=>this.onChangeRequestText()}>
                             </li>
                             <li class="info-item">
                                 <p class="info-title">주문자 연락처<span class="fw700 color-point">(필수)</span></p>
-                                <input type="text" placeholder="연락처를 입력해 주세요." class="input-text" required>
+                                <input type="text" placeholder="연락처를 입력해 주세요." class="input-text contactText" required value=${this.contactText} @change=${()=>this.onChangeRequestText()}>
                             </li>
                         </ul>
                     </div>
@@ -114,68 +141,11 @@ export default class MenuPage extends View{
                                 <p class="place-address">서울시 강남구 역삼동 123-4</p>
                                 <p class="place-address-detail">역삼역 8번 출구로 나와서 직진 410m</p>
                             </div>
-                            <img src="https://via.placeholder.com/400x170?text=map image" alt="" class="img-map">
+                            <img src="/assets/images/map.png" alt="" class="img-map">
                         </div>
                     </div>
 
-                    <div class="agreement-area">
-                        <p class="title">개인정보 수집, 제공</p>
-
-                        <ul class="agreement-list">
-                            <li class="agreement-item is-open">
-                                <div class="agreement-title">
-                                    <span class="txt">개인정보 수집 동의</span>
-                                    <button class="btn-toggle">
-                                        <img src="./assets/images/ico-arrow-gray.svg" alt="">
-                                    </button>
-                                </div>
-                                <div class="agreement-content">
-                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit possimus
-                                    voluptatibus sit officia natus asperiores molestias placeat magni, corporis eius
-                                    laboriosam facere nemo obcaecati tenetur reiciendis quam in consequuntur
-                                    beatae?<br><br>
-                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit possimus
-                                    voluptatibus sit officia natus asperiores molestias placeat magni, corporis eius
-                                    laboriosam facere nemo obcaecati tenetur reiciendis quam in consequuntur
-                                    beatae?<br><br>
-                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit possimus
-                                    voluptatibus sit officia natus asperiores molestias placeat magni, corporis eius
-                                    laboriosam facere nemo obcaecati tenetur reiciendis quam in consequuntur
-                                    beatae?<br><br>
-                                </div>
-                            </li>
-                            <li class="agreement-item">
-                                <div class="agreement-title">
-                                    <span class="txt">개인정보 제공 동의</span>
-                                    <button class="btn-toggle">
-                                        <img src="./assets/images/ico-arrow-gray.svg" alt="">
-                                    </button>
-                                </div>
-                                <div class="agreement-content">
-                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit possimus
-                                    voluptatibus sit officia natus asperiores molestias placeat magni, corporis eius
-                                    laboriosam facere nemo obcaecati tenetur reiciendis quam in consequuntur
-                                    beatae?
-                                </div>
-                            </li>
-                            <li class="agreement-item">
-                                <div class="agreement-title color-point">
-                                    <span class="txt">주문취소 및 환불 유의사항</span>
-                                    <button class="btn-toggle">
-                                        <img src="./assets/images/ico-arrow-gray.svg" alt="">
-                                    </button>
-                                </div>
-                                <div class="agreement-content">
-                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit possimus
-                                    voluptatibus sit officia natus asperiores molestias placeat magni, corporis eius
-                                    laboriosam facere nemo obcaecati tenetur reiciendis quam in consequuntur
-                                    beatae?
-                                </div>
-                            </li>
-                        </ul>
-
-                        <p class="agreement-info-txt">주문 서비스 이용을 위한 개인정보 수집 및 제3자 제공, 취소/환불 규정을 확인하였으며 이에 동의합니다.</p>
-                    </div>
+                    
                 </div>
             </div>
             <!-- // 주문자 정보 -->
