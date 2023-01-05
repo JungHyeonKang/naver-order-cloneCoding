@@ -3,12 +3,13 @@ import View from "../view.js"
 import { getKoreanMoneyString } from "../utils/currency.js";
 import SpinButton from "./SpinButton.js";
 export default class OrderSelectList extends View{
-    constructor(orderTypeIndex=0,cartItems=[],increaseOrderAmount,decreaseOrderAmount){
+    constructor(orderTypeIndex=0,cartItems=[],increaseOrderAmount,decreaseOrderAmount,deleteCartItem){
         super()
         this.orderTypeIndex = orderTypeIndex;
         this.cartItems = cartItems;
         this.increaseOrderAmount=increaseOrderAmount;
         this.decreaseOrderAmount = decreaseOrderAmount
+        this.deleteCartItem =deleteCartItem
      }
      static get properties(){
          return {
@@ -25,6 +26,9 @@ export default class OrderSelectList extends View{
                 type : Function
             },
             getFinalPrice : {
+                type : Function
+            },
+            deleteCartItem : {
                 type : Function
             },
          }
@@ -69,7 +73,7 @@ export default class OrderSelectList extends View{
                 <p class="menu-price">${getKoreanMoneyString(item.price * item.amount)}원</p>
             </div>
         </div>
-        <button class="btn-delete">
+        <button class="btn-delete" @click=${()=>this.deleteCartItem(item.menuInfo.id)}>
             <img src="./assets/images/ico-close.svg" alt="삭제" class="ico-delete">
         </button>
         </li>

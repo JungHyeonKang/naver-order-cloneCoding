@@ -26,6 +26,9 @@ export default class App extends View{
             cartItems : {
                 type : Array  
             },
+            deleteCartItem : {
+                type : Function
+            },
         }
     }
     setOrderTypeIndex(index){
@@ -37,6 +40,16 @@ export default class App extends View{
         this.cartItems = newCartItems;
         history.pushState(null,null,"/")
         dispatchEvent(new PopStateEvent("popstate"))
+    }
+    deleteCartItem(menuId){
+        const newItems = [...this.cartItems]
+        const targetIndex=newItems.findIndex((item)=> item.menuInfo.id === menuId )
+        if(targetIndex === -1) return
+        newItems.splice(targetIndex,1)
+        this.cartItems = newItems
+    }
+    resetCartItem(){
+        this.cartItems = []
     }
     route(){
         switch (this.currenPage) {
@@ -50,7 +63,9 @@ export default class App extends View{
             case "order":
                 return html `<order-page 
                 .orderTypeIndex=${this.orderTypeIndex} 
-                .cartItems=${this.cartItems}>
+                .cartItems=${this.cartItems}
+                .deleteCartItem=${this.deleteCartItem.bind(this)}
+                .resetCartItem=${this.resetCartItem.bind(this)}>
                 </order-page>`    
                
             default:

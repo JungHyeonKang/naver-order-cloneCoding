@@ -4,13 +4,16 @@ import { getRecentMenu , getMenuGroups,getMenu} from "../api";
 import { getKoreanMoneyString } from "../utils/currency";
 
 export default class MenuPage extends View{
-    constructor(orderTypeIndex=0,cartItems=[]){
+    constructor(orderTypeIndex=0,cartItems=[],deleteCartItem,resetCartItem){
         super()
         this.orderTypeIndex = orderTypeIndex;
         this.cartItems = cartItems
         this.needDisposables = true;
         this.requestText = "";
         this.contactText = ""
+        this.isOpened = false;
+        this.deleteCartItem = deleteCartItem
+        this.resetCartItem =resetCartItem
     }
     static get properties(){
         return {
@@ -44,6 +47,15 @@ export default class MenuPage extends View{
             onChangeRequestText : {
                 type : Function
             },
+            isOpened : {
+                type : Boolean
+            },
+            deleteCartItem : {
+                type : Function
+            },
+            resetCartItem : {
+                type : Function
+            },
         }
     }
     redirectMenuPage(){
@@ -72,6 +84,16 @@ export default class MenuPage extends View{
     onChangeContactText(){
         this.contactText = document.querySelector(".contactText").value
     }
+    openModal(){
+        this.isOpened = true;
+    }
+    closeModal(){
+        this.isOpened = false;
+    }
+    order(){
+        this.resetCartItem()
+        this.redirectMenuPage()
+    }
     render(){
         return html`
         <div class="container order">
@@ -94,7 +116,8 @@ export default class MenuPage extends View{
                     .orderTypeIndex=${this.orderTypeIndex} 
                     .cartItems=${this.cartItems}
                     .increaseOrderAmount=${this.increaseOrderAmount.bind(this)}
-                    .decreaseOrderAmount=${this.decreaseOrderAmount.bind(this)}>
+                    .decreaseOrderAmount=${this.decreaseOrderAmount.bind(this)}
+                    .deleteCartItem=${this.deleteCartItem.bind(this)}>
                     </order-select-list>
 
                     
@@ -152,7 +175,7 @@ export default class MenuPage extends View{
 
             <!-- 주문하기 버튼 -->
             <div class="btn-order-area">
-                <button class="btn-order">
+                <button class="btn-order" @click=${()=>this.openModal()}>
                     <svg viewBox="0 0 18 18" width="18" height="18" class="ico-n-logo">
                         <path fill-rule="evenodd" fill="currentColor"
                             d="M18 0v18H0V0h18zM7.255 4.582H4.473v9.054h2.915V8.79l3.357 4.846h2.782V4.582h-2.915v4.846L7.255 4.582z">
@@ -170,11 +193,11 @@ export default class MenuPage extends View{
         </div>
 
         <!-- 모달 -->
-        <div class="modal-wrapper hidden">
+        <div class="modal-wrapper ${this.isOpened ? '' : "hidden"}">
             <div class="dimmed-layer light"></div>
             <div class="modal-container">
                 <div class="modal-content">
-                    <button class="btn-close" onClick="modalClose()">
+                    <button class="btn-close" @click=${()=>this.closeModal()}>
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M2 2L14 14" stroke="#999" stroke-width="1.5" />
                             <path d="M2 14L14 2" stroke="#999" stroke-width="1.5" />
@@ -188,12 +211,12 @@ export default class MenuPage extends View{
                                 d="M29.9,20.5C29.7,20.2,29.3,20,29,20h-1.1c-0.5-4.4-4.1-8.8-8.7-10.2c-2.1-0.7-4.4-0.7-6.5,0C8.2,11.2,4.5,15.6,4.1,20H3   c-0.3,0-0.7,0.2-0.9,0.5s-0.2,0.7,0,1C3.5,24.3,6.3,26,9.5,26h13.1c3.1,0,6-1.7,7.4-4.6C30,21.1,30,20.8,29.9,20.5z M13.3,11.7   c1.7-0.5,3.6-0.5,5.3,0c3.7,1.1,6.8,4.7,7.3,8.3H6.1C6.6,16.4,9.6,12.9,13.3,11.7z M22.5,24H9.5c-1.8,0-3.4-0.7-4.6-2h22.2   C25.9,23.3,24.3,24,22.5,24z" />
                         </svg>
                     </div>
-                    <h1 class="modal-title">모달 제목</h1>
-                    <p class="modal-desc">모달에 관련된 설명글이 적힙니다.</p>
+                    <h1 class="modal-title">주문 완료</h1>
+                    <p class="modal-desc">주문이 완료되었습니다</p>
                 </div>
                 <div class="btn-area">
-                    <button class="btn-cancel" onClick="modalClose()">취소</button>
-                    <button class="btn-confirm" onClick="modalClose()">확인</button>
+                    <button class="btn-cancel" @click=${()=>this.closeModal()}>취소</button>
+                    <button class="btn-confirm" @click=${()=>this.order()}>확인</button>
                 </div>
             </div>
         </div>
