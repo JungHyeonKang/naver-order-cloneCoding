@@ -17,10 +17,10 @@
 <p><sub> [구현 완료 이미지] </sub></p>
   <span>
   <img src="https://user-images.githubusercontent.com/104352404/211038353-083b6ff2-e22e-4f75-b3dc-2c08dffff83a.png" width="30%" height="30%"/>
-   </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp
+   </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <span>
   <img src="https://user-images.githubusercontent.com/104352404/211045009-8a906a39-116d-4553-bab3-613b3b1d9a34.png" width="30%" height="30%"/>
-   </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp
+   </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    <span>
   <img src="https://user-images.githubusercontent.com/104352404/211044980-423fddf2-48b6-4acc-9ffe-80b6d77b98d7.png" width="30%" height="30%"/>
    </span>
